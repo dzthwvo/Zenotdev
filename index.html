@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zenoz - Đăng nhập</title>
+    <title>ZenoDev - Đăng nhập</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -18,9 +18,8 @@
         body {
             font-family: 'Inter', sans-serif;
             background-color: #0f1014; /* Màu nền tối chủ đạo */
-            /* Tạo hiệu ứng ánh sáng mờ như trong ảnh */
             background-image: radial-gradient(circle at 10% 20%, rgba(255, 215, 0, 0.05) 0%, transparent 40%),
-                              radial-gradient(circle at 90% 80%, rgba(88, 101, 242, 0.05) 0%, transparent 40%);
+                              radial-gradient(circle at 90% 80%, rgba(59, 130, 246, 0.05) 0%, transparent 40%);
             color: #ffffff;
             height: 100vh;
             display: flex;
@@ -62,7 +61,7 @@
             background-color: #1a1b1e; /* Màu nền của card */
             border-radius: 16px;
             padding: 40px 30px;
-            margin-bottom: 50px;
+            margin-bottom: 40px;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
             border: 1px solid #2f3136;
         }
@@ -73,18 +72,18 @@
             margin-bottom: 10px;
         }
 
-        .login-card p {
+        .login-card .card-desc {
             color: #9ca3af;
             font-size: 0.9rem;
             margin-bottom: 25px;
         }
 
-        /* --- NÚT DISCORD --- */
-        .btn-discord {
+        /* --- NÚT GOOGLE (THAY ĐỔI) --- */
+        .btn-google {
             display: flex;
             align-items: center;
             justify-content: center;
-            background-color: #5865F2; /* Màu chuẩn Discord */
+            background-color: #3b82f6; /* Màu xanh dương của Google (hoặc dùng #4285F4) */
             color: white;
             text-decoration: none;
             padding: 12px 24px;
@@ -97,21 +96,40 @@
             cursor: pointer;
         }
 
-        .btn-discord:hover {
-            background-color: #4752c4;
+        .btn-google:hover {
+            background-color: #2563eb; /* Màu tối hơn khi di chuột */
         }
 
-        .btn-discord i {
+        .btn-google i {
             margin-right: 10px;
             font-size: 1.2rem;
         }
+
+        /* --- DÒNG ĐĂNG KÝ (THÊM MỚI) --- */
+        .register-prompt {
+            margin-top: 20px;
+            font-size: 0.85rem;
+            color: #9ca3af;
+        }
+
+        .register-prompt a {
+            color: #3b82f6; /* Màu xanh dương yêu cầu */
+            text-decoration: none;
+            font-weight: 600;
+            margin-left: 5px;
+        }
+        
+        .register-prompt a:hover {
+            text-decoration: underline;
+        }
+
 
         /* --- MENU DƯỚI (FOOTER ICONS) --- */
         .bottom-menu {
             display: flex;
             justify-content: center;
             gap: 40px;
-            margin-top: 20px;
+            margin-top: 10px;
         }
 
         .menu-item {
@@ -128,6 +146,12 @@
             color: #ffffff;
         }
 
+        .menu-item-desc {
+            font-size: 0.7rem; 
+            color: #666;
+            margin-top: 4px;
+        }
+
         .icon-box {
             width: 45px;
             height: 45px;
@@ -136,13 +160,13 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 8px;
+            margin-bottom: 5px;
             font-size: 1.2rem;
             border: 1px solid #2f3136;
             transition: all 0.3s ease;
         }
 
-        /* Màu sắc riêng cho từng icon giống ảnh */
+        /* Màu sắc riêng cho từng icon */
         .menu-item:nth-child(1) .icon-box i { color: #e74c3c; } /* Nhiệm vụ - Đỏ */
         .menu-item:nth-child(2) .icon-box i { color: #f1c40f; } /* Shop - Vàng */
         .menu-item:nth-child(3) .icon-box i { color: #f39c12; } /* Xếp hạng - Cam */
@@ -162,36 +186,41 @@
 <body>
 
     <div class="container">
-        <h1 class="logo">King<span>Dev</span></h1>
-        <p class="subtitle">Kiếm Acoin • Vượt link • Đổi tài vật phẩm vip</p>
+        <h1 class="logo">Zeno<span>Dev</span></h1>
+        <p class="subtitle">Kiếm coin • Vượt link • Đổi vật phẩm GTD</p>
 
         <div class="login-card">
-            <h2>Welcom Back!!</h2>
-            <p>Đăng nhập bằng tài khoản Discord để tiếp tục</p>
+            <h2>Chào mừng trở lại!</h2>
+            <p class="card-desc">Đăng nhập bằng tài khoản Google để tiếp tục</p>
             
-            <a href="#" class="btn-discord">
-                <i class="fa-brands fa-discord"></i>
-                Đăng nhập với Discord
+            <a href="#" class="btn-google">
+                <i class="fa-brands fa-google"></i>
+                Đăng nhập với Google
             </a>
+
+            <div class="register-prompt">
+                Bạn chưa có tài khoản?
+                <a href="#">Đăng kí tài khoản ngay</a>
+            </div>
         </div>
 
         <div class="bottom-menu">
             <a href="#" class="menu-item">
                 <div class="icon-box"><i class="fa-solid fa-bullseye"></i></div>
                 <span>Nhiệm vụ</span>
-                <span style="font-size: 0.7rem; color: #666;">Vượt link kiếm coin</span>
+                <span class="menu-item-desc">Vượt link kiếm coin</span>
             </a>
             
             <a href="#" class="menu-item">
                 <div class="icon-box"><i class="fa-solid fa-cart-shopping"></i></div>
                 <span>Shop</span>
-                <span style="font-size: 0.7rem; color: #666;">Đổi vật phẩm vip</span>
+                <span class="menu-item-desc">Đổi vật phẩm GTD</span>
             </a>
 
             <a href="#" class="menu-item">
                 <div class="icon-box"><i class="fa-solid fa-trophy"></i></div>
                 <span>Xếp hạng</span>
-                <span style="font-size: 0.7rem; color: #666;">Top người vượt link</span>
+                <span class="menu-item-desc">Top người vượt link</span>
             </a>
         </div>
     </div>
