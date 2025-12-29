@@ -1,109 +1,200 @@
 <!DOCTYPE html>
 <html lang="vi">
-
 <head>
-<meta charset="UTF-8">
-<title>ZenoDev Login</title>
-<style>
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        font-family: Poppins, sans-serif;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KingDev - Đăng nhập</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* --- CẤU HÌNH CƠ BẢN --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    body {
-        background: #000;
-        color: #fff;
-        height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0f1014; /* Màu nền tối chủ đạo */
+            /* Tạo hiệu ứng ánh sáng mờ như trong ảnh */
+            background-image: radial-gradient(circle at 10% 20%, rgba(255, 215, 0, 0.05) 0%, transparent 40%),
+                              radial-gradient(circle at 90% 80%, rgba(88, 101, 242, 0.05) 0%, transparent 40%);
+            color: #ffffff;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
 
-    .login-container {
-        background: #111;
-        padding: 30px 40px;
-        border-radius: 10px;
-        width: 350px;
-        border: 1px solid #222;
-        text-align: center;
-    }
+        .container {
+            text-align: center;
+            width: 100%;
+            max-width: 450px;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
 
-    .logo {
-        margin-bottom: 25px;
-    }
+        /* --- PHẦN LOGO --- */
+        .logo {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
 
-    .logo img {
-        width: 80px;
-        height: 80px;
-    }
+        .logo span {
+            color: #f1c40f; /* Màu vàng của chữ Dev */
+        }
 
-    .login-container h2 {
-        font-size: 26px;
-        margin-bottom: 18px;
-        color: #00ffcc;
-    }
+        .subtitle {
+            font-size: 0.9rem;
+            color: #9ca3af; /* Màu xám nhạt */
+            margin-bottom: 40px;
+            font-weight: 400;
+        }
 
-    .input-field {
-        width: 100%;
-        padding: 12px 15px;
-        border-radius: 8px;
-        border: 1px solid #444;
-        background: #000;
-        color: #fff;
-        margin-bottom: 12px;
-        font-size: 15px;
-    }
+        /* --- KHUNG ĐĂNG NHẬP (CARD) --- */
+        .login-card {
+            background-color: #1a1b1e; /* Màu nền của card */
+            border-radius: 16px;
+            padding: 40px 30px;
+            margin-bottom: 50px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            border: 1px solid #2f3136;
+        }
 
-    .btn-login {
-        width: 100%;
-        padding: 12px;
-        background: #00ffcc;
-        border: none;
-        border-radius: 8px;
-        font-size: 16px;
-        font-weight: bold;
-        cursor: pointer;
-        color: #000;
-        margin-top: 8px;
-    }
+        .login-card h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
 
-    .btn-login:hover {
-        opacity: 0.95;
-    }
+        .login-card p {
+            color: #9ca3af;
+            font-size: 0.9rem;
+            margin-bottom: 25px;
+        }
 
-    .other-options {
-        font-size: 14px;
-        color: #ccc;
-        margin-top: 15px;
-    }
+        /* --- NÚT DISCORD --- */
+        .btn-discord {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #5865F2; /* Màu chuẩn Discord */
+            color: white;
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+            width: 100%;
+            border: none;
+            cursor: pointer;
+        }
 
-    .other-options a {
-        color: #00ccff;
-        text-decoration: none;
-        font-weight: bold;
-    }
-</style>
+        .btn-discord:hover {
+            background-color: #4752c4;
+        }
+
+        .btn-discord i {
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+
+        /* --- MENU DƯỚI (FOOTER ICONS) --- */
+        .bottom-menu {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 20px;
+        }
+
+        .menu-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #9ca3af;
+            text-decoration: none;
+            transition: color 0.3s;
+            font-size: 0.85rem;
+        }
+
+        .menu-item:hover {
+            color: #ffffff;
+        }
+
+        .icon-box {
+            width: 45px;
+            height: 45px;
+            background-color: #1a1b1e;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 8px;
+            font-size: 1.2rem;
+            border: 1px solid #2f3136;
+            transition: all 0.3s ease;
+        }
+
+        /* Màu sắc riêng cho từng icon giống ảnh */
+        .menu-item:nth-child(1) .icon-box i { color: #e74c3c; } /* Nhiệm vụ - Đỏ */
+        .menu-item:nth-child(2) .icon-box i { color: #f1c40f; } /* Shop - Vàng */
+        .menu-item:nth-child(3) .icon-box i { color: #f39c12; } /* Xếp hạng - Cam */
+
+        .menu-item:hover .icon-box {
+            transform: translateY(-3px);
+            border-color: #4b4e57;
+        }
+
+        /* Responsive cho điện thoại */
+        @media (max-width: 480px) {
+            .logo { font-size: 2rem; }
+            .bottom-menu { gap: 20px; }
+        }
+    </style>
 </head>
-
 <body>
 
-<div class="login-container">
-    <div class="logo">
-        <img src="https://ibb.co/Q7mxbJC7" alt="logo">
+    <div class="container">
+        <h1 class="logo">King<span>Dev</span></h1>
+        <p class="subtitle">Kiếm coin • Vượt link • Đổi tài khoản premium</p>
+
+        <div class="login-card">
+            <h2>Chào mừng trở lại!</h2>
+            <p>Đăng nhập bằng tài khoản Discord để tiếp tục</p>
+            
+            <a href="#" class="btn-discord">
+                <i class="fa-brands fa-discord"></i>
+                Đăng nhập với Discord
+            </a>
+        </div>
+
+        <div class="bottom-menu">
+            <a href="#" class="menu-item">
+                <div class="icon-box"><i class="fa-solid fa-bullseye"></i></div>
+                <span>Nhiệm vụ</span>
+                <span style="font-size: 0.7rem; color: #666;">Vượt link kiếm coin</span>
+            </a>
+            
+            <a href="#" class="menu-item">
+                <div class="icon-box"><i class="fa-solid fa-cart-shopping"></i></div>
+                <span>Shop</span>
+                <span style="font-size: 0.7rem; color: #666;">Đổi tài khoản premium</span>
+            </a>
+
+            <a href="#" class="menu-item">
+                <div class="icon-box"><i class="fa-solid fa-trophy"></i></div>
+                <span>Xếp hạng</span>
+                <span style="font-size: 0.7rem; color: #666;">Top người vượt link</span>
+            </a>
+        </div>
     </div>
-    <h2>Đăng nhập ZenoDev</h2>
-
-    <input type="text" class="input-field" placeholder="Tên đăng nhập">
-    <input type="password" class="input-field" placeholder="Mật khẩu">
-
-    <button class="btn-login">Login</button>
-
-    <div class="other-options">
-        <p>Chưa có tài khoản? <a href="#">Đăng ký</a></p>
-    </div>
-</div>
 
 </body>
 </html>
