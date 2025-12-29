@@ -1,11 +1,109 @@
 <!DOCTYPE html>
-<html>
+<html lang="vi">
+
 <head>
-  <meta charset="utf-8">
-  <title>ZenoTDev</title>
+<meta charset="UTF-8">
+<title>ZenoDev Login</title>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Poppins, sans-serif;
+    }
+
+    body {
+        background: #000;
+        color: #fff;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .login-container {
+        background: #111;
+        padding: 30px 40px;
+        border-radius: 10px;
+        width: 350px;
+        border: 1px solid #222;
+        text-align: center;
+    }
+
+    .logo {
+        margin-bottom: 25px;
+    }
+
+    .logo img {
+        width: 80px;
+        height: 80px;
+    }
+
+    .login-container h2 {
+        font-size: 26px;
+        margin-bottom: 18px;
+        color: #00ffcc;
+    }
+
+    .input-field {
+        width: 100%;
+        padding: 12px 15px;
+        border-radius: 8px;
+        border: 1px solid #444;
+        background: #000;
+        color: #fff;
+        margin-bottom: 12px;
+        font-size: 15px;
+    }
+
+    .btn-login {
+        width: 100%;
+        padding: 12px;
+        background: #00ffcc;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        color: #000;
+        margin-top: 8px;
+    }
+
+    .btn-login:hover {
+        opacity: 0.95;
+    }
+
+    .other-options {
+        font-size: 14px;
+        color: #ccc;
+        margin-top: 15px;
+    }
+
+    .other-options a {
+        color: #00ccff;
+        text-decoration: none;
+        font-weight: bold;
+    }
+</style>
 </head>
-<body style="background:black;color:white;text-align:center;">
-  <h1>ZenoTDev</h1>
-  <p>Website đang hoạt động 🚀</p>
+
+<body>
+
+<div class="login-container">
+    <div class="logo">
+        <img src="https://ibb.co/Q7mxbJC7" alt="logo">
+    </div>
+    <h2>Đăng nhập ZenoDev</h2>
+
+    <input type="text" class="input-field" placeholder="Tên đăng nhập">
+    <input type="password" class="input-field" placeholder="Mật khẩu">
+
+    <button class="btn-login">Login</button>
+
+    <div class="other-options">
+        <p>Chưa có tài khoản? <a href="#">Đăng ký</a></p>
+    </div>
+</div>
+
 </body>
 </html>
