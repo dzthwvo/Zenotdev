@@ -3,227 +3,234 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ZenoDev - Đăng nhập</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>ZenoDev - Hệ thống nhiệm vụ</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        /* --- CẤU HÌNH CƠ BẢN --- */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        :root {
+            --bg-dark: #0f1014;
+            --card-bg: #1a1b1e;
+            --sidebar-bg: #131418;
+            --accent-yellow: #f1c40f;
+            --accent-blue: #3b82f6;
+            --text-gray: #9ca3af;
+            --border-color: #2f3136;
         }
 
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #0f1014; /* Màu nền tối chủ đạo */
-            background-image: radial-gradient(circle at 10% 20%, rgba(255, 215, 0, 0.05) 0%, transparent 40%),
-                              radial-gradient(circle at 90% 80%, rgba(59, 130, 246, 0.05) 0%, transparent 40%);
+            background-color: var(--bg-dark);
             color: #ffffff;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* --- MÀN HÌNH ĐĂNG NHẬP --- */
+        #login-screen {
             height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            overflow: hidden;
+            background-image: radial-gradient(circle at 10% 20%, rgba(255, 215, 0, 0.05) 0%, transparent 40%),
+                              radial-gradient(circle at 90% 80%, rgba(59, 130, 246, 0.05) 0%, transparent 40%);
         }
 
-        .container {
-            text-align: center;
-            width: 100%;
-            max-width: 450px;
-            padding: 20px;
-            position: relative;
-            z-index: 1;
-        }
+        .login-container { text-align: center; width: 100%; max-width: 450px; padding: 20px; }
+        .logo-big { font-size: 2.5rem; font-weight: 700; margin-bottom: 10px; }
+        .logo-big span { color: var(--accent-yellow); }
+        .subtitle { font-size: 0.9rem; color: var(--text-gray); margin-bottom: 40px; }
 
-        /* --- PHẦN LOGO --- */
-        .logo {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 10px;
-        }
-
-        .logo span {
-            color: #f1c40f; /* Màu vàng của chữ Dev */
-        }
-
-        .subtitle {
-            font-size: 0.9rem;
-            color: #9ca3af; /* Màu xám nhạt */
-            margin-bottom: 40px;
-            font-weight: 400;
-        }
-
-        /* --- KHUNG ĐĂNG NHẬP (CARD) --- */
         .login-card {
-            background-color: #1a1b1e; /* Màu nền của card */
+            background-color: var(--card-bg);
             border-radius: 16px;
             padding: 40px 30px;
             margin-bottom: 40px;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-            border: 1px solid #2f3136;
+            border: 1px solid var(--border-color);
         }
 
-        .login-card h2 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 10px;
-        }
-
-        .login-card .card-desc {
-            color: #9ca3af;
-            font-size: 0.9rem;
-            margin-bottom: 25px;
-        }
-
-        /* --- NÚT GOOGLE (THAY ĐỔI) --- */
         .btn-google {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: #3b82f6; /* Màu xanh dương của Google (hoặc dùng #4285F4) */
-            color: white;
-            text-decoration: none;
-            padding: 12px 24px;
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: 1rem;
-            transition: background-color 0.3s ease;
-            width: 100%;
-            border: none;
-            cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            background-color: var(--accent-blue); color: white;
+            text-decoration: none; padding: 12px 24px;
+            border-radius: 8px; font-weight: 600; font-size: 1rem;
+            transition: background-color 0.3s; width: 100%; border: none; cursor: pointer;
+        }
+        .btn-google:hover { background-color: #2563eb; }
+        .btn-google i { margin-right: 10px; font-size: 1.2rem; }
+
+        /* --- MÀN HÌNH DASHBOARD (ẨN MẶC ĐỊNH) --- */
+        #dashboard-screen {
+            display: none; /* Sẽ hiện khi click login */
+            flex-direction: row;
         }
 
-        .btn-google:hover {
-            background-color: #2563eb; /* Màu tối hơn khi di chuột */
+        .sidebar {
+            width: 260px; background-color: var(--sidebar-bg);
+            border-right: 1px solid var(--border-color);
+            display: flex; flex-direction: column; padding: 20px;
+            position: fixed; height: 100vh;
         }
 
-        .btn-google i {
-            margin-right: 10px;
-            font-size: 1.2rem;
+        .brand { font-size: 1.8rem; font-weight: 700; margin-bottom: 30px; }
+        .brand span { color: var(--accent-yellow); }
+
+        .nav-link {
+            display: flex; align-items: center; padding: 12px 15px;
+            color: var(--text-gray); text-decoration: none; border-radius: 8px;
+            margin-bottom: 5px; font-weight: 500; transition: 0.2s;
+        }
+        .nav-link.active { background-color: #2e2f35; color: var(--accent-yellow); border-left: 3px solid var(--accent-yellow); }
+        .nav-link:hover:not(.active) { background-color: #1f2937; color: white; }
+
+        .user-profile {
+            margin-top: auto; display: flex; align-items: center;
+            padding: 12px; background-color: var(--card-bg);
+            border-radius: 10px; border: 1px solid var(--border-color);
+        }
+        .user-avatar {
+            width: 35px; height: 35px; background-color: var(--accent-yellow);
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            font-weight: bold; color: #000; margin-right: 10px;
         }
 
-        /* --- DÒNG ĐĂNG KÝ (THÊM MỚI) --- */
-        .register-prompt {
-            margin-top: 20px;
-            font-size: 0.85rem;
-            color: #9ca3af;
+        .main-content { margin-left: 260px; flex: 1; padding: 20px 30px; }
+        .top-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+        .coin-badge {
+            background-color: #1f2023; padding: 8px 16px; border-radius: 20px;
+            display: flex; align-items: center; border: 1px solid #333; color: var(--accent-yellow); font-weight: 600;
         }
 
-        .register-prompt a {
-            color: #3b82f6; /* Màu xanh dương yêu cầu */
-            text-decoration: none;
-            font-weight: 600;
-            margin-left: 5px;
-        }
-        
-        .register-prompt a:hover {
-            text-decoration: underline;
+        .alert-box {
+            background-color: rgba(241, 196, 15, 0.05); border: 1px solid rgba(241, 196, 15, 0.3);
+            border-radius: 8px; padding: 20px; color: var(--accent-yellow); margin-bottom: 30px;
         }
 
-
-        /* --- MENU DƯỚI (FOOTER ICONS) --- */
-        .bottom-menu {
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            margin-top: 10px;
+        .task-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 20px;
         }
 
-        .menu-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            color: #9ca3af;
-            text-decoration: none;
-            transition: color 0.3s;
-            font-size: 0.85rem;
+        .task-card {
+            background-color: var(--sidebar-bg); border: 1px solid var(--border-color);
+            border-radius: 12px; padding: 20px;
         }
 
-        .menu-item:hover {
-            color: #ffffff;
+        .btn-task {
+            background-color: var(--accent-yellow); color: #000; border: none;
+            padding: 12px; border-radius: 8px; font-weight: 700; cursor: pointer; width: 100%; margin-top: 15px;
         }
 
-        .menu-item-desc {
-            font-size: 0.7rem; 
-            color: #666;
-            margin-top: 4px;
-        }
-
-        .icon-box {
-            width: 45px;
-            height: 45px;
-            background-color: #1a1b1e;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 5px;
-            font-size: 1.2rem;
-            border: 1px solid #2f3136;
-            transition: all 0.3s ease;
-        }
-
-        /* Màu sắc riêng cho từng icon */
-        .menu-item:nth-child(1) .icon-box i { color: #e74c3c; } /* Nhiệm vụ - Đỏ */
-        .menu-item:nth-child(2) .icon-box i { color: #f1c40f; } /* Shop - Vàng */
-        .menu-item:nth-child(3) .icon-box i { color: #f39c12; } /* Xếp hạng - Cam */
-
-        .menu-item:hover .icon-box {
-            transform: translateY(-3px);
-            border-color: #4b4e57;
-        }
-
-        /* Responsive cho điện thoại */
-        @media (max-width: 480px) {
-            .logo { font-size: 2rem; }
-            .bottom-menu { gap: 20px; }
+        @media (max-width: 768px) {
+            .sidebar { display: none; }
+            .main-content { margin-left: 0; }
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <h1 class="logo">Zeno<span>Dev</span></h1>
-        <p class="subtitle">Kiếm coin • Vượt link • Đổi vật phẩm GTD</p>
-
-        <div class="login-card">
-            <h2>Chào mừng trở lại!</h2>
-            <p class="card-desc">Đăng nhập bằng tài khoản Google để tiếp tục</p>
-            
-            <a href="#" class="btn-google">
-                <i class="fa-brands fa-google"></i>
-                Đăng nhập với Google
-            </a>
-
-            <div class="register-prompt">
-                Bạn chưa có tài khoản?
-                <a href="#">Đăng kí tài khoản ngay</a>
+    <div id="login-screen">
+        <div class="login-container">
+            <h1 class="logo-big">Zeno<span>Dev</span></h1>
+            <p class="subtitle">Kiếm coin • Vượt link • Đổi vật phẩm GTD</p>
+            <div class="login-card">
+                <h2 style="margin-bottom: 10px;">Chào mừng trở lại!</h2>
+                <p style="color: var(--text-gray); font-size: 0.9rem; margin-bottom: 25px;">Đăng nhập bằng tài khoản Google để tiếp tục</p>
+                
+                <button onclick="login()" class="btn-google">
+                    <i class="fa-brands fa-google"></i>
+                    Đăng nhập với Google
+                </button>
             </div>
-        </div>
-
-        <div class="bottom-menu">
-            <a href="#" class="menu-item">
-                <div class="icon-box"><i class="fa-solid fa-bullseye"></i></div>
-                <span>Nhiệm vụ</span>
-                <span class="menu-item-desc">Vượt link kiếm coin</span>
-            </a>
-            
-            <a href="#" class="menu-item">
-                <div class="icon-box"><i class="fa-solid fa-cart-shopping"></i></div>
-                <span>Shop</span>
-                <span class="menu-item-desc">Đổi vật phẩm GTD</span>
-            </a>
-
-            <a href="#" class="menu-item">
-                <div class="icon-box"><i class="fa-solid fa-trophy"></i></div>
-                <span>Xếp hạng</span>
-                <span class="menu-item-desc">Top người vượt link</span>
-            </a>
         </div>
     </div>
 
+    <div id="dashboard-screen">
+        <div class="sidebar">
+            <div class="brand">Zeno<span>Dev</span></div>
+            <div style="font-size: 0.7rem; color: #666; margin-bottom: 10px; font-weight: 700;">MENU</div>
+            <nav>
+                <a href="#" class="nav-link"><i class="fa-solid fa-house" style="width:25px"></i> Trang chủ</a>
+                <a href="#" class="nav-link active"><i class="fa-solid fa-bullseye" style="width:25px"></i> Nhiệm vụ</a>
+                <a href="#" class="nav-link"><i class="fa-solid fa-right-left" style="width:25px"></i> Đổi tài khoản</a>
+                <a href="#" class="nav-link"><i class="fa-solid fa-coins" style="width:25px"></i> Nạp Coin</a>
+                <a href="#" class="nav-link"><i class="fa-solid fa-clock-rotate-left" style="width:25px"></i> Lịch sử</a>
+                <a href="#" class="nav-link"><i class="fa-solid fa-chart-simple" style="width:25px"></i> Bảng xếp hạng</a>
+            </nav>
+
+            <div class="user-profile">
+                <div class="user-avatar">G</div>
+                <div class="user-info">
+                    <h4 id="user-name">Google User</h4>
+                    <p style="font-size: 0.8rem; color: var(--accent-yellow);"><i class="fa-solid fa-coins"></i> 0 Coin</p>
+                </div>
+                <i class="fa-solid fa-right-from-bracket" style="margin-left: auto; color: #555; cursor: pointer;" onclick="location.reload()"></i>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="top-header">
+                <h2 style="font-weight: 700;">Nhiệm vụ</h2>
+                <div class="coin-badge"><i class="fa-solid fa-coins"></i> 0</div>
+            </div>
+
+            <div class="alert-box">
+                <strong><i class="fa-regular fa-lightbulb"></i> Hướng dẫn</strong><br>
+                <span style="font-size: 0.9rem;">Nhấn "Nhận link" → Vượt link → Tự động nhận coin khi hoàn thành.</span>
+            </div>
+
+            <div class="task-grid">
+                <div class="task-card">
+                    <div style="display: flex; justify-content: space-between;">
+                        <div style="display: flex; align-items: center;">
+                            <div style="background:#1f2023; padding:10px; border-radius:8px; margin-right:15px;"><i class="fa-solid fa-link"></i></div>
+                            <div>
+                                <div style="font-weight: 700;">Yeumoney</div>
+                                <div style="color: var(--accent-yellow); font-size: 0.8rem;">40 coin / lượt</div>
+                            </div>
+                        </div>
+                        <span style="color: var(--accent-yellow); font-size: 0.8rem; background: #1f2023; padding: 4px 8px; border-radius: 5px;">0/3</span>
+                    </div>
+                    <button class="btn-task"><i class="fa-solid fa-rocket"></i> Nhận link</button>
+                </div>
+                <div class="task-card">
+                    <div style="display: flex; justify-content: space-between;">
+                        <div style="display: flex; align-items: center;">
+                            <div style="background:#1f2023; padding:10px; border-radius:8px; margin-right:15px;"><i class="fa-solid fa-link"></i></div>
+                            <div>
+                                <div style="font-weight: 700;">Link4m</div>
+                                <div style="color: var(--accent-yellow); font-size: 0.8rem;">45 coin / lượt</div>
+                            </div>
+                        </div>
+                        <span style="color: var(--accent-yellow); font-size: 0.8rem; background: #1f2023; padding: 4px 8px; border-radius: 5px;">0/2</span>
+                    </div>
+                    <button class="btn-task"><i class="fa-solid fa-rocket"></i> Nhận link</button>
+                </div>
+                <div class="task-card">
+                    <div style="display: flex; justify-content: space-between;">
+                        <div style="display: flex; align-items: center;">
+                            <div style="background:#1f2023; padding:10px; border-radius:8px; margin-right:15px;"><i class="fa-solid fa-link"></i></div>
+                            <div>
+                                <div style="font-weight: 700;">Click1s</div>
+                                <div style="color: var(--accent-yellow); font-size: 0.8rem;">55 coin / lượt</div>
+                            </div>
+                        </div>
+                        <span style="color: var(--accent-yellow); font-size: 0.8rem; background: #1f2023; padding: 4px 8px; border-radius: 5px;">0/1</span>
+                    </div>
+                    <button class="btn-task"><i class="fa-solid fa-rocket"></i> Nhận link</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function login() {
+            // Hiệu ứng chuyển cảnh đơn giản
+            document.getElementById('login-screen').style.display = 'none';
+            document.getElementById('dashboard-screen').style.display = 'flex';
+        }
+    </script>
 </body>
 </html>
