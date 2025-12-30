@@ -2,48 +2,47 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <title>King Dev - Hệ Thống Nạp Thẻ</title>
+    <title>King Dev - Hệ Thống Vượt Link & Nạp Thẻ</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root { --bg: #0f1014; --side: #131418; --yellow: #f1c40f; --border: #2f3136; --card: #1a1b1e; }
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         body { background: var(--bg); color: #fff; }
 
-        /* --- AUTH --- */
+        /* --- TRANG ĐĂNG NHẬP / ĐĂNG KÝ --- */
         #auth-page { height: 100vh; display: flex; align-items: center; justify-content: center; flex-direction: column; }
-        .auth-box { background: var(--card); padding: 30px; border-radius: 12px; border: 1px solid var(--border); width: 350px; }
-        input, select { width: 100%; background: #26272b; border: 1px solid var(--border); padding: 12px; border-radius: 8px; color: #fff; margin-bottom: 10px; outline: none; }
+        .auth-box { background: var(--card); padding: 35px; border-radius: 15px; border: 1px solid var(--border); width: 100%; max-width: 380px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        input, select { width: 100%; background: #26272b; border: 1px solid var(--border); padding: 12px; border-radius: 8px; color: #fff; margin-bottom: 12px; outline: none; }
         .btn { width: 100%; padding: 12px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; margin-bottom: 10px; transition: 0.3s; }
-        .btn-yellow { background: var(--yellow); color: #000; }
-        .btn-yellow:hover { opacity: 0.8; }
+        .btn-yellow { background: var(--yellow); color: #000; font-size: 1rem; }
         .btn-gray { background: #333; color: #fff; }
         #msg-error { color: #ff4d4d; background: rgba(255,77,77,0.1); padding: 10px; border-radius: 5px; margin-bottom: 15px; display: none; text-align: center; font-weight: bold; border: 1px solid rgba(255,77,77,0.2); }
 
-        /* --- LAYOUT --- */
+        /* --- GIAO DIỆN CHÍNH --- */
         #main-web { display: none; }
-        .sidebar { width: 250px; background: var(--side); height: 100vh; position: fixed; border-right: 1px solid var(--border); padding: 20px; display: flex; flex-direction: column; }
-        .nav-item { padding: 15px; cursor: pointer; color: #888; border-radius: 8px; margin-bottom: 5px; display: flex; align-items: center; gap: 10px; }
-        .nav-item.active { background: #222; color: var(--yellow); border-left: 3px solid var(--yellow); }
-        .content { margin-left: 250px; padding: 30px; width: calc(100% - 250px); }
+        .sidebar { width: 260px; background: var(--side); height: 100vh; position: fixed; border-right: 1px solid var(--border); padding: 25px 15px; display: flex; flex-direction: column; }
+        .nav-item { padding: 14px 15px; cursor: pointer; color: #888; border-radius: 8px; margin-bottom: 5px; display: flex; align-items: center; gap: 12px; transition: 0.2s; }
+        .nav-item.active { background: #222; color: var(--yellow); border-left: 4px solid var(--yellow); }
+        .content { margin-left: 260px; padding: 35px; width: calc(100% - 260px); }
         
         .tab { display: none; }
         .tab.active { display: block; }
-        .grid-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 20px; }
-        .card { background: var(--card); padding: 20px; border-radius: 10px; border: 1px solid var(--border); margin-bottom: 15px; }
-        .card b { font-size: 1.5rem; color: var(--yellow); }
+        .grid-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; margin-bottom: 25px; }
+        .card { background: var(--card); padding: 22px; border-radius: 12px; border: 1px solid var(--border); margin-bottom: 18px; }
+        .card b { font-size: 1.8rem; color: var(--yellow); display: block; margin-bottom: 5px; }
         
-        .footer-user { margin-top: auto; background: #1a1b1e; padding: 10px; border-radius: 10px; display: flex; align-items: center; gap: 10px; border: 1px solid #222; }
-        .avt { width: 35px; height: 35px; background: var(--yellow); border-radius: 50%; color: #000; display: flex; align-items: center; justify-content: center; font-weight: 900; }
+        .footer-user { margin-top: auto; background: #1a1b1e; padding: 12px; border-radius: 12px; display: flex; align-items: center; gap: 12px; border: 1px solid #222; }
+        .avt { width: 38px; height: 38px; background: var(--yellow); border-radius: 50%; color: #000; display: flex; align-items: center; justify-content: center; font-weight: 900; }
     </style>
 </head>
 <body>
 
     <div id="auth-page">
-        <h1 style="margin-bottom:20px; letter-spacing: 2px;">KING <span style="color:var(--yellow)">DEV</span></h1>
+        <h1 style="margin-bottom:25px; font-weight: 900; font-size: 2.5rem;">KING <span style="color:var(--yellow)">DEV</span></h1>
         <div class="auth-box">
             <div id="msg-error">Warning: inaccurate information!!</div>
-            <input type="text" id="username" placeholder="Tên đăng nhập">
-            <input type="password" id="password" placeholder="Mật khẩu">
+            <input type="text" id="username" placeholder="Tên đăng nhập (NamGTD001)">
+            <input type="password" id="password" placeholder="Mật khẩu (NamGTD01@)">
             <button class="btn btn-yellow" onclick="handleLogin()">ĐĂNG NHẬP</button>
             <button class="btn btn-gray" onclick="handleRegister()">ĐĂNG KÝ TÀI KHOẢN</button>
         </div>
@@ -51,104 +50,126 @@
 
     <div id="main-web">
         <div class="sidebar">
-            <h2 style="margin-bottom:30px">KING <span style="color:var(--yellow)">DEV</span></h2>
+            <h2 style="margin-bottom:35px; letter-spacing: 1px;">KING <span style="color:var(--yellow)">DEV</span></h2>
             <div class="nav-item active" onclick="openTab('home', this)"><i class="fa fa-home"></i> Trang chủ</div>
-            <div class="nav-item" onclick="openTab('task', this)"><i class="fa fa-link"></i> Nhiệm vụ</div>
-            <div class="nav-item" onclick="openTab('shop', this)"><i class="fa fa-shop"></i> Đổi tài khoản</div>
-            <div class="nav-item" onclick="openTab('nap-card', this)"><i class="fa fa-credit-card"></i> Nạp Thẻ Cào</div>
+            <div class="nav-item" onclick="openTab('task', this)"><i class="fa fa-link"></i> Nhiệm vụ link</div>
+            <div class="nav-item" onclick="openTab('shop', this)"><i class="fa fa-shopping-cart"></i> Cửa hàng Account</div>
+            <div class="nav-item" onclick="openTab('nap-card', this)"><i class="fa fa-credit-card"></i> Nạp thẻ cào</div>
             <div class="nav-item" onclick="openTab('log', this)"><i class="fa fa-history"></i> Lịch sử</div>
-            <div class="nav-item" onclick="openTab('profile', this)"><i class="fa fa-user"></i> Hồ sơ</div>
+            <div class="nav-item" onclick="openTab('profile', this)"><i class="fa fa-user-circle"></i> Hồ sơ</div>
 
             <div class="footer-user">
                 <div class="avt" id="avt-small">?</div>
                 <div style="flex:1">
-                    <div id="user-display" style="font-size:0.8rem; font-weight:bold">User</div>
-                    <div style="font-size:0.7rem; color:var(--yellow)">0 Coin</div>
+                    <div id="user-display" style="font-size:0.85rem; font-weight:bold">User</div>
+                    <div style="font-size:0.75rem; color:var(--yellow)">0 Coin</div>
                 </div>
-                <i class="fa fa-sign-out" style="cursor:pointer; color:#444" onclick="location.reload()"></i>
+                <i class="fa fa-sign-out" style="cursor:pointer; color:#555" title="Đăng xuất" onclick="location.reload()"></i>
             </div>
         </div>
 
         <div class="content">
-            <h2 id="tab-name" style="margin-bottom:25px">Trang chủ</h2>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:30px">
+                <h2 id="tab-name" style="font-size: 1.8rem;">Trang chủ</h2>
+                <div style="background:var(--card); padding:8px 20px; border-radius:30px; border:1px solid var(--border); color:var(--yellow); font-weight: bold;">
+                    <i class="fa fa-coins"></i> 0 Coin
+                </div>
+            </div>
             
             <div id="home" class="tab active">
                 <div class="grid-stats">
-                    <div class="card"><b>0</b><br><small>Tổng Coin</small></div>
-                    <div class="card"><b>0</b><br><small>Link hôm nay</small></div>
-                    <div class="card"><b>0</b><br><small>Tổng link</small></div>
-                    <div class="card"><b>0</b><br><small>Nhiệm vụ</small></div>
+                    <div class="card"><b>0</b><small style="color:#777">Tổng Coin</small></div>
+                    <div class="card"><b>0</b><small style="color:#777">Link hôm nay</small></div>
+                    <div class="card"><b>0</b><small style="color:#777">Tổng link vượt</small></div>
+                    <div class="card"><b>0</b><small style="color:#777">Nhiệm vụ</small></div>
                 </div>
-                <div class="card" style="border-left: 4px solid var(--yellow);">
-                    <p style="color:var(--yellow); font-size:0.9rem"><i class="fa fa-bullhorn"></i> <b>Thông báo:</b> Ae nạp thẻ cào lưu ý chọn đúng mệnh giá, sai mệnh giá sẽ mất thẻ!</p>
+                <div class="card" style="border-left: 5px solid var(--yellow); background: rgba(241,196,15,0.02)">
+                    <p style="color:var(--yellow);"><i class="fa fa-bullhorn"></i> <b>THÔNG BÁO:</b> Chào mừng bạn đến với hệ thống buôn bán của King Dev. Chúc bạn một ngày tốt lành!</p>
                 </div>
             </div>
 
             <div id="nap-card" class="tab">
-                <div class="card" style="max-width: 500px; margin: 0 auto;">
-                    <h3 style="margin-bottom:15px; text-align:center">Nạp Thẻ Tự Động</h3>
-                    <label style="font-size:0.8rem; color:#888">Chọn nhà mạng:</label>
-                    <select id="card-type">
-                        <option value="viettel">Viettel</option>
-                        <option value="mobifone">Mobifone</option>
-                        <option value="vinaphone">Vinaphone</option>
-                        <option value="zing">Zing</option>
-                    </select>
-
-                    <label style="font-size:0.8rem; color:#888">Chọn mệnh giá:</label>
-                    <select id="card-amount">
-                        <option value="10000">10,000đ (Nhận 0 Coin)</option>
-                        <option value="20000">20,000đ (Nhận 0 Coin)</option>
-                        <option value="50000">50,000đ (Nhận 0 Coin)</option>
-                        <option value="100000">100,000đ (Nhận 0 Coin)</option>
-                    </select>
-
-                    <input type="text" placeholder="Số Seri" id="card-seri">
-                    <input type="text" placeholder="Mã thẻ" id="card-code">
+                <div class="card" style="max-width: 550px; margin: 0 auto; padding: 30px;">
+                    <h3 style="margin-bottom:20px; text-align:center"><i class="fa fa-credit-card"></i> NẠP THẺ CÀO TỰ ĐỘNG</h3>
                     
-                    <button class="btn btn-yellow" style="margin-top:10px" onclick="alert('Hệ thống đang bảo trì, vui lòng quay lại sau!')">NẠP THẺ NGAY</button>
-                    <p style="font-size:0.7rem; color:#555; text-align:center; margin-top:10px">Hệ thống xử lý tự động từ 10-30 giây.</p>
+                    <div style="margin-bottom:15px">
+                        <label style="font-size:0.8rem; color:#888; display:block; margin-bottom:5px">Loại thẻ:</label>
+                        <select>
+                            <option>Viettel</option>
+                            <option>Vinaphone</option>
+                            <option>Mobifone</option>
+                            <option>Zing</option>
+                        </select>
+                    </div>
+
+                    <div style="margin-bottom:15px">
+                        <label style="font-size:0.8rem; color:#888; display:block; margin-bottom:5px">Mệnh giá:</label>
+                        <select>
+                            <option>10,000 VNĐ</option>
+                            <option>20,000 VNĐ</option>
+                            <option>50,000 VNĐ</option>
+                            <option>100,000 VNĐ</option>
+                            <option>200,000 VNĐ</option>
+                            <option>500,000 VNĐ</option>
+                        </select>
+                    </div>
+
+                    <input type="text" placeholder="Nhập số Seri thẻ" style="margin-bottom:15px">
+                    <input type="text" placeholder="Nhập mã thẻ (dưới lớp cào)" style="margin-bottom:15px">
+                    
+                    <button class="btn btn-yellow" style="margin-top:10px" onclick="handleCardSubmit()">NẠP THẺ NGAY</button>
+                    
+                    <div style="background: rgba(0,0,0,0.2); padding: 15px; border-radius: 8px; margin-top: 20px; font-size: 0.8rem; color: #777;">
+                        <p>• Vui lòng chọn đúng mệnh giá.</p>
+                        <p>• Thẻ sai mệnh giá sẽ không được cộng tiền.</p>
+                        <p>• Hệ thống xử lý trong 30 giây - 1 phút.</p>
+                    </div>
                 </div>
             </div>
 
             <div id="task" class="tab">
                 <div class="card" style="display:flex; justify-content:space-between; align-items:center">
-                    <div><b>Vượt link 1s</b><br><small style="color:var(--yellow)">0 coin / 1 lượt</small></div>
-                    <button class="btn btn-yellow" style="width:auto; padding:5px 15px">Nhận link</button>
+                    <div><b>Vượt link 1s nhận Account</b><br><small style="color:var(--yellow)">Yêu cầu: 0 lượt vượt</small></div>
+                    <button class="btn btn-yellow" style="width:auto; padding:8px 25px">Nhận link</button>
+                </div>
+                <div class="card" style="display:flex; justify-content:space-between; align-items:center">
+                    <div><b>Vượt link Yeumoney</b><br><small style="color:var(--yellow)">Yêu cầu: 0 lượt vượt</small></div>
+                    <button class="btn btn-yellow" style="width:auto; padding:8px 25px">Nhận link</button>
                 </div>
             </div>
 
             <div id="shop" class="tab">
-                <div class="card" style="text-align:center; padding:50px">
-                    <i class="fa fa-box-open" style="font-size:3rem; color:#222; margin-bottom:15px"></i>
-                    <p style="color:#555">Kho hàng hiện tại đang trống.</p>
+                <div class="card" style="text-align:center; padding:60px">
+                    <i class="fa fa-shopping-bag" style="font-size:4rem; color:#222; margin-bottom:20px"></i>
+                    <p style="color:#555; font-size: 1.1rem;">Hiện tại cửa hàng đang bảo trì sản phẩm.</p>
                 </div>
             </div>
 
             <div id="log" class="tab">
                 <div class="card" style="padding:0; overflow:hidden">
                     <table style="width:100%; border-collapse: collapse;">
-                        <thead style="background:#222">
+                        <thead style="background:#131418">
                             <tr>
-                                <th style="padding:15px; text-align:left; font-size:0.8rem">Loại</th>
-                                <th style="padding:15px; text-align:left; font-size:0.8rem">Nội dung</th>
-                                <th style="padding:15px; text-align:left; font-size:0.8rem">Trạng thái</th>
+                                <th style="padding:18px; text-align:left; font-size:0.85rem; color:#777">LOẠI</th>
+                                <th style="padding:18px; text-align:left; font-size:0.85rem; color:#777">NỘI DUNG</th>
+                                <th style="padding:18px; text-align:left; font-size:0.85rem; color:#777">TRẠNG THÁI</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr><td colspan="3" style="text-align:center; padding:30px; color:#444">Chưa có dữ liệu giao dịch.</td></tr>
+                            <tr><td colspan="3" style="text-align:center; padding:40px; color:#444">Bạn chưa thực hiện giao dịch nào.</td></tr>
                         </tbody>
                     </table>
                 </div>
             </div>
 
             <div id="profile" class="tab">
-                <div class="card" style="display:flex; gap:20px; align-items:center">
-                    <div class="avt" style="width:70px; height:70px; font-size:2rem" id="avt-big">?</div>
+                <div class="card" style="display:flex; gap:30px; align-items:center; padding:40px">
+                    <div class="avt" style="width:90px; height:90px; font-size:2.5rem" id="avt-big">?</div>
                     <div>
-                        <h3 id="p-name" style="font-size:1.5rem">Username</h3>
-                        <p style="color:var(--yellow)">Số dư tài khoản: 0 Coin</p>
-                        <p style="font-size:0.8rem; color:#555">Ngày tham gia: 30/12/2025</p>
+                        <h3 id="p-name" style="font-size:1.8rem; margin-bottom:5px">Username</h3>
+                        <p style="color:var(--yellow); font-weight: bold;">Số dư: 0 Coin</p>
+                        <p style="font-size:0.9rem; color:#555; margin-top:10px">ID Người dùng: #102938</p>
+                        <p style="font-size:0.9rem; color:#555">Trạng thái: <span style="color:#2ecc71">Đang hoạt động</span></p>
                     </div>
                 </div>
             </div>
@@ -156,12 +177,12 @@
     </div>
 
     <script>
-        // Xử lý Đăng ký
+        // Hệ thống Đăng ký (Lưu vào trình duyệt)
         function handleRegister() {
             const u = document.getElementById('username').value.trim();
             const p = document.getElementById('password').value.trim();
             if(u === "" || p === "") {
-                alert("Vui lòng không để trống thông tin!");
+                alert("Bạn chưa nhập tên hoặc mật khẩu!");
                 return;
             }
             localStorage.setItem('kingdev_user', u);
@@ -169,7 +190,7 @@
             alert("Đăng ký thành công! Hãy dùng tài khoản này để Đăng nhập.");
         }
 
-        // Xử lý Đăng nhập
+        // Hệ thống Đăng nhập
         function handleLogin() {
             const u = document.getElementById('username').value.trim();
             const p = document.getElementById('password').value.trim();
@@ -189,13 +210,18 @@
             }
         }
 
-        // Chuyển Tab
+        // Chuyển đổi các Tab nội dung
         function openTab(id, el) {
             document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
             document.getElementById(id).classList.add('active');
             document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
             el.classList.add('active');
             document.getElementById('tab-name').innerText = el.innerText;
+        }
+
+        // Hiệu ứng nạp thẻ giả
+        function handleCardSubmit() {
+            alert("Hệ thống đã nhận thẻ! Vui lòng chờ 1-2 phút để Admin duyệt.");
         }
     </script>
 </body>
