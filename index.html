@@ -3,222 +3,200 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>King Dev - Hệ Thống Full Option</title>
+    <title>King Dev - Hệ Thống Vượt Link</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root { --bg: #0f1014; --side: #131418; --card: #1a1b1e; --yellow: #f1c40f; --border: #2f3136; --text-gray: #9ca3af; }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Inter', sans-serif; background: var(--bg); color: #fff; overflow-x: hidden; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: #fff; }
 
-        /* --- LOGIN SECTION --- */
-        #auth-section { height: 100vh; display: flex; justify-content: center; align-items: center; background: var(--bg); position: fixed; width: 100%; z-index: 9999; }
-        .auth-box { background: var(--card); padding: 40px; border-radius: 15px; border: 1px solid var(--border); width: 400px; text-align: center; }
-        .auth-input { width: 100%; background: #26272b; border: 1px solid var(--border); padding: 12px; border-radius: 8px; color: #fff; margin: 10px 0; outline: none; }
-        .auth-btn { width: 100%; background: var(--yellow); color: #000; padding: 12px; border: none; border-radius: 8px; font-weight: 800; cursor: pointer; margin-top: 15px; }
-        .error-lbl { color: #ff4d4d; font-size: 0.85rem; margin-bottom: 10px; display: none; background: rgba(255,77,77,0.1); padding: 10px; border-radius: 5px; }
+        /* --- AUTH --- */
+        .auth-screen { height: 100vh; display: flex; justify-content: center; align-items: center; flex-direction: column; }
+        .auth-box { background: var(--card); padding: 35px; border-radius: 15px; border: 1px solid var(--border); width: 100%; max-width: 380px; }
+        .error-msg { color: #ff4d4d; font-size: 0.85rem; margin-bottom: 15px; text-align: center; display: none; font-weight: 700; background: rgba(255, 77, 77, 0.1); padding: 10px; border-radius: 6px; border: 1px solid rgba(255, 77, 77, 0.2); }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; font-size: 0.7rem; color: #888; margin-bottom: 5px; text-transform: uppercase; }
+        .form-group input { width: 100%; background: #26272b; border: 1px solid var(--border); padding: 12px; border-radius: 8px; color: #fff; outline: none; }
+        .btn-auth { width: 100%; background: var(--yellow); color: #000; border: none; padding: 12px; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 1rem; }
 
-        /* --- MAIN LAYOUT --- */
-        #main-app { display: none; }
+        /* --- LAYOUT --- */
+        #main-app { display: none; display: flex; }
         .sidebar { width: 260px; background: var(--side); height: 100vh; position: fixed; border-right: 1px solid var(--border); padding: 20px; display: flex; flex-direction: column; }
-        .nav-link { padding: 12px 15px; color: var(--text-gray); cursor: pointer; display: flex; align-items: center; gap: 12px; border-radius: 8px; transition: 0.2s; margin-bottom: 2px; font-size: 0.9rem; }
-        .nav-link:hover, .nav-link.active { background: #2e2f35; color: var(--yellow); }
-        .nav-link.active { border-left: 3px solid var(--yellow); }
+        .nav-link { padding: 12px 15px; color: var(--text-gray); cursor: pointer; display: flex; align-items: center; gap: 12px; border-radius: 8px; margin-bottom: 3px; font-size: 0.9rem; }
+        .nav-link.active { background: #2e2f35; color: var(--yellow); border-left: 3px solid var(--yellow); }
         
-        .content { margin-left: 260px; padding: 30px; min-height: 100vh; }
+        .content { margin-left: 260px; width: calc(100% - 260px); padding: 30px; }
         .tab-content { display: none; }
         .tab-content.active { display: block; }
 
-        /* --- COMPONENTS FROM IMAGES --- */
-        .header-flex { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
-        .coin-pill { background: var(--card); padding: 6px 15px; border-radius: 20px; border: 1px solid var(--border); color: var(--yellow); font-weight: 700; font-size: 0.9rem; }
-        
-        /* Stats Grid (Image 146) */
+        /* --- STYLES TỪ 6 ẢNH --- */
         .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 20px; }
-        .stat-item { background: var(--card); padding: 20px; border-radius: 12px; border: 1px solid var(--border); }
-        .stat-item b { font-size: 1.8rem; color: var(--yellow); display: block; }
-        .stat-item span { font-size: 0.8rem; color: var(--text-gray); }
+        .stat-card { background: var(--card); padding: 20px; border-radius: 12px; border: 1px solid var(--border); }
+        .stat-card b { font-size: 1.8rem; color: var(--yellow); display: block; }
+        
+        .task-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; }
+        .btn-link { background: var(--yellow); color: #000; border: none; padding: 8px 20px; border-radius: 6px; font-weight: 700; cursor: pointer; }
 
-        /* Tasks (Image 150) */
-        .task-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        .task-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px; position: relative; }
-        .btn-action { width: 100%; background: var(--yellow); color: #000; border: none; padding: 10px; border-radius: 8px; font-weight: 700; cursor: pointer; margin-top: 15px; display: flex; align-items: center; justify-content: center; gap: 8px; }
+        .profile-flex { display: grid; grid-template-columns: 1fr 2fr; gap: 20px; }
+        .avatar-box { background: var(--card); padding: 30px; border-radius: 15px; text-align: center; border: 1px solid var(--border); }
+        .circle { width: 80px; height: 80px; background: var(--yellow); border-radius: 50%; margin: 0 auto 15px; display: flex; align-items: center; justify-content: center; font-size: 2rem; color: #000; font-weight: 800; }
 
-        /* Profile (Image 154) */
-        .profile-container { display: grid; grid-template-columns: 1fr 1.5fr; gap: 20px; }
-        .p-box { background: var(--card); padding: 30px; border-radius: 15px; border: 1px solid var(--border); text-align: center; }
-        .avatar-lg { width: 100px; height: 100px; background: var(--yellow); border-radius: 50%; margin: 0 auto 15px; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; color: #000; border: 4px solid #333; }
+        table { width: 100%; border-collapse: collapse; background: var(--card); border-radius: 10px; overflow: hidden; border: 1px solid var(--border); }
+        th, td { padding: 15px; text-align: left; border-bottom: 1px solid #222; }
+        th { color: var(--text-gray); font-size: 0.75rem; text-transform: uppercase; }
 
-        /* Table (Image 153) */
-        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
-        th { text-align: left; color: var(--text-gray); font-size: 0.75rem; padding: 15px; text-transform: uppercase; border-bottom: 1px solid var(--border); }
-        td { padding: 15px; font-size: 0.85rem; border-bottom: 1px solid #222; }
-
-        /* Shop (Image 151) */
-        .shop-tabs { display: flex; gap: 10px; margin-bottom: 20px; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
-        .shop-tab { padding: 8px 15px; font-size: 0.85rem; color: var(--text-gray); cursor: pointer; }
-        .shop-tab.active { color: var(--yellow); border-bottom: 2px solid var(--yellow); }
-
-        .footer-user { margin-top: auto; background: #1e1e1e; padding: 15px; border-radius: 12px; display: flex; align-items: center; gap: 10px; border: 1px solid #262626; }
+        .footer-profile { margin-top: auto; display: flex; align-items: center; gap: 10px; background: #1a1b1e; padding: 12px; border-radius: 10px; border: 1px solid #222; }
     </style>
 </head>
 <body>
 
-    <div id="auth-section">
+    <div id="login-screen" class="auth-screen">
+        <h1 style="margin-bottom:20px">King <span style="color:var(--yellow)">Dev</span></h1>
         <div class="auth-box">
-            <h1 style="margin-bottom:20px; font-weight:900">King <span style="color:var(--yellow)">Dev</span></h1>
-            <div id="login-err" class="error-lbl">Warning: inaccurate information!!</div>
-            <input type="text" id="user-in" class="auth-input" placeholder="Tên đăng nhập (ví dụ: NamGTD001)">
-            <input type="password" id="pass-in" class="auth-input" placeholder="Mật khẩu (ví dụ: NamGTD01@)">
-            <button class="auth-btn" onclick="checkLogin()">ĐĂNG NHẬP</button>
-            <p style="margin-top:20px; font-size:0.8rem; color:#666">Chưa có tài khoản? <span style="color:var(--yellow); cursor:pointer">Đăng ký ngay</span></p>
+            <div id="login-err" class="error-msg">Warning: inaccurate information!!</div>
+            <div class="form-group"><label>Username</label><input type="text" id="l-u" placeholder="NamGTD001"></div>
+            <div class="form-group"><label>Password</label><input type="password" id="l-p" placeholder="NamGTD01@"></div>
+            <button class="btn-auth" onclick="doLogin()">ĐĂNG NHẬP</button>
+            <p style="text-align:center; margin-top:15px; font-size:0.8rem">Chưa có tài khoản? <span style="color:var(--yellow); cursor:pointer" onclick="showAuth('reg')">Đăng ký</span></p>
         </div>
     </div>
 
-    <div id="main-app">
+    <div id="reg-screen" class="auth-screen" style="display:none">
+        <h1 style="margin-bottom:20px">Đăng ký</h1>
+        <div class="auth-box">
+            <div class="form-group"><label>Username</label><input type="text" id="r-u"></div>
+            <div class="form-group"><label>Password</label><input type="password" id="r-p"></div>
+            <div class="form-group"><label>Xác nhận</label><input type="password" id="r-c"></div>
+            <button class="btn-auth" onclick="doReg()">ĐĂNG KÝ NGAY</button>
+            <p style="text-align:center; margin-top:15px; font-size:0.8rem" onclick="showAuth('login')">Quay lại đăng nhập</p>
+        </div>
+    </div>
+
+    <div id="main-app" style="display:none">
         <div class="sidebar">
             <h2 style="margin-bottom:30px">King <span style="color:var(--yellow)">Dev</span></h2>
-            <div class="nav-link active" onclick="showTab('trang-chu', this)"><i class="fa-solid fa-house"></i> Trang chủ</div>
-            <div class="nav-link" onclick="showTab('nhiem-vu', this)"><i class="fa-solid fa-list-check"></i> Nhiệm vụ</div>
-            <div class="nav-link" onclick="showTab('doi-tai-khoan', this)"><i class="fa-solid fa-shop"></i> Đổi tài khoản</div>
-            <div class="nav-link" onclick="showTab('nap-coin', this)"><i class="fa-solid fa-coins"></i> Nạp Coin</div>
-            <div class="nav-link" onclick="showTab('lich-su', this)"><i class="fa-solid fa-clock-rotate-left"></i> Lịch sử</div>
-            <div class="nav-link" onclick="showTab('ho-so', this)"><i class="fa-solid fa-user"></i> Hồ sơ</div>
-            
-            <div class="footer-user">
-                <div style="width:35px; height:35px; background:var(--yellow); border-radius:50%; color:#000; display:flex; align-items:center; justify-content:center; font-weight:800" id="small-avt">U</div>
+            <div class="nav-link active" onclick="tab('trang-chu', this)"><i class="fa-solid fa-house"></i> Trang chủ</div>
+            <div class="nav-link" onclick="tab('nhiem-vu', this)"><i class="fa-solid fa-list-check"></i> Nhiệm vụ</div>
+            <div class="nav-link" onclick="tab('shop', this)"><i class="fa-solid fa-shop"></i> Đổi tài khoản</div>
+            <div class="nav-link" onclick="tab('nap', this)"><i class="fa-solid fa-coins"></i> Nạp Coin</div>
+            <div class="nav-link" onclick="tab('lich-su', this)"><i class="fa-solid fa-history"></i> Lịch sử</div>
+            <div class="nav-link" onclick="tab('ho-so', this)"><i class="fa-solid fa-user"></i> Hồ sơ</div>
+
+            <div class="footer-profile">
+                <div class="circle" style="width:32px; height:32px; font-size:0.9rem; margin:0" id="s-avt">U</div>
                 <div style="flex:1">
-                    <div id="display-u" style="font-size:0.8rem; font-weight:700">Username</div>
+                    <div id="u-display" style="font-size:0.8rem; font-weight:700">Username</div>
                     <div style="font-size:0.7rem; color:var(--yellow)">0 Coin</div>
                 </div>
-                <i class="fa-solid fa-right-from-bracket" style="font-size:0.8rem; color:#444; cursor:pointer" onclick="location.reload()"></i>
+                <i class="fa-solid fa-right-from-bracket" style="cursor:pointer; color:#444" onclick="location.reload()"></i>
             </div>
         </div>
 
         <div class="content">
-            <div class="header-flex">
-                <h2 id="tab-title">Trang chủ</h2>
-                <div class="coin-pill"><i class="fa-solid fa-coins"></i> 0</div>
+            <div style="display:flex; justify-content:space-between; margin-bottom:25px">
+                <h2 id="title">Trang chủ</h2>
+                <div style="background:var(--card); padding:5px 15px; border-radius:20px; border:1px solid var(--border); color:var(--yellow)">0 COIN</div>
             </div>
 
             <div id="trang-chu" class="tab-content active">
                 <div class="stats-grid">
-                    <div class="stat-item"><b>0</b><span>Tổng Coin</span></div>
-                    <div class="stat-item"><b>0</b><span>Link hôm nay</span></div>
-                    <div class="stat-item"><b>0</b><span>Tổng link đã vượt</span></div>
-                    <div class="stat-item"><b>0</b><span>Nhiệm vụ khả dụng</span></div>
+                    <div class="stat-card"><b>0</b><span>Tổng Coin</span></div>
+                    <div class="stat-card"><b>0</b><span>Link hôm nay</span></div>
+                    <div class="stat-card"><b>0</b><span>Tổng link</span></div>
+                    <div class="stat-card"><b>0</b><span>Khả dụng</span></div>
                 </div>
-                <div style="background:rgba(241,196,15,0.05); border:1px solid rgba(241,196,15,0.2); padding:15px; border-radius:10px; color:var(--yellow); font-size:0.85rem; margin-bottom:20px">
-                    <i class="fa-solid fa-bullhorn"></i> <b>Thông báo:</b> Ae chia sẻ website để nhiều người biết đến nhé!!!
-                </div>
-                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:20px">
-                    <div class="stat-item" style="text-align:center">
-                        <span style="display:block; margin-bottom:10px">Reset Coin: 03/01/2026</span>
-                        <b style="font-size:1.2rem">00 : 00 : 00 : 00</b>
-                    </div>
-                    <div class="stat-item" style="text-align:center">
-                        <span style="display:block; margin-bottom:10px">Reset Link hàng ngày</span>
-                        <b style="font-size:1.2rem; color:#2ecc71">00 : 00 : 00 : 00</b>
-                    </div>
+                <div style="background:rgba(241,196,15,0.05); border:1px solid rgba(241,196,15,0.2); padding:15px; border-radius:10px; color:var(--yellow); font-size:0.85rem">
+                    <i class="fa-solid fa-bullhorn"></i> Thông báo: Chào mừng bạn quay trở lại hệ thống!!!
                 </div>
             </div>
 
             <div id="nhiem-vu" class="tab-content">
-                <div style="background:rgba(241,196,15,0.1); padding:15px; border-radius:10px; margin-bottom:20px; color:var(--yellow); font-size:0.85rem">
-                    <i class="fa-solid fa-lightbulb"></i> Nhấn "Nhận link" -> Vượt link -> Tự động nhận coin.
-                </div>
-                <div class="task-grid">
-                    <div class="task-card"><b>Yeumoney</b><br><small style="color:var(--yellow)">0 coin / lượt</small><button class="btn-action"><i class="fa-solid fa-link"></i> Nhận link</button></div>
-                    <div class="task-card"><b>Link4m</b><br><small style="color:var(--yellow)">0 coin / lượt</small><button class="btn-action"><i class="fa-solid fa-link"></i> Nhận link</button></div>
-                    <div class="task-card"><b>Click1s</b><br><small style="color:var(--yellow)">0 coin / lượt</small><button class="btn-action"><i class="fa-solid fa-link"></i> Nhận link</button></div>
-                    <div class="task-card"><b>LinkNgon</b><br><small style="color:var(--yellow)">0 coin / lượt</small><button class="btn-action"><i class="fa-solid fa-link"></i> Nhận link</button></div>
-                </div>
+                <div class="task-card"><div><b>Yeumoney</b><br><small style="color:var(--yellow)">0 coin / lượt</small></div><button class="btn-link">Nhận link</button></div>
+                <div class="task-card"><div><b>Link4m</b><br><small style="color:var(--yellow)">0 coin / lượt</small></div><button class="btn-link">Nhận link</button></div>
             </div>
 
-            <div id="doi-tai-khoan" class="tab-content">
-                <div class="shop-tabs">
-                    <div class="shop-tab active">Tất cả (0)</div>
-                    <div class="shop-tab">Email</div>
-                    <div class="shop-tab">Roblox</div>
-                    <div class="shop-tab">Uphone</div>
-                </div>
-                <div style="text-align:center; padding:50px; color:#444">Chưa có sản phẩm nào khả dụng.</div>
+            <div id="shop" class="tab-content">
+                <div style="text-align:center; padding:50px; color:#444">Chưa có tài khoản nào để đổi.</div>
             </div>
 
-            <div id="nap-coin" class="tab-content">
-                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:20px">
-                    <div class="p-box"><span>Số dư hiện tại</span><br><b style="font-size:2.5rem; color:var(--yellow)">0</b><br><span>Coin</span></div>
-                    <div class="p-box">
-                        <select class="auth-input"><option>50,000 VND = 5,000 Coin</option></select>
-                        <button class="btn-action" style="background:#2ecc71">Thanh toán qua Momo</button>
-                    </div>
+            <div id="nap" class="tab-content">
+                <div class="stat-card" style="text-align:center">
+                    <p>Momo / Ngân hàng</p>
+                    <b style="font-size:1.2rem; margin:15px 0">50,000đ = 5,000 Coin</b>
+                    <button class="btn-auth" style="width:auto; padding:10px 40px">Nạp ngay</button>
                 </div>
             </div>
 
             <div id="lich-su" class="tab-content">
-                <div style="display:flex; gap:10px; margin-bottom:20px">
-                    <button class="btn-action" style="margin:0; flex:1">Vượt link</button>
-                    <button class="btn-action" style="margin:0; flex:1; background:#333; color:#fff">Đổi tài khoản</button>
-                </div>
-                <div class="stat-item" style="padding:0">
-                    <table>
-                        <thead><tr><th>Nhiệm vụ</th><th>Coin nhận</th><th>Thời gian</th></tr></thead>
-                        <tbody><tr><td colspan="3" style="text-align:center; padding:30px; color:#555">Chưa có lịch sử.</td></tr></tbody>
-                    </table>
-                </div>
+                <table>
+                    <thead><tr><th>Nhiệm vụ</th><th>Coin</th><th>Ngày</th></tr></thead>
+                    <tbody><tr><td colspan="3" style="text-align:center; color:#444">Trống</td></tr></tbody>
+                </table>
             </div>
 
             <div id="ho-so" class="tab-content">
-                <div class="profile-container">
-                    <div class="p-box">
-                        <div class="avatar-lg" id="big-avt">?</div>
-                        <h3 id="p-name">Username</h3>
-                        <p style="color:#555; font-size:0.8rem">Thành viên</p>
-                        <div class="auth-input" style="text-align:left; font-size:0.8rem">Discord ID: 0000000000</div>
+                <div class="profile-flex">
+                    <div class="avatar-box">
+                        <div class="circle" id="b-avt">U</div>
+                        <h3 id="p-name">User</h3>
+                        <p style="color:#555">ID: 000000</p>
                     </div>
-                    <div class="stats-grid" style="grid-template-columns: 1fr 1fr;">
-                        <div class="stat-item"><b>0</b><span>Coin hiện có</span></div>
-                        <div class="stat-item"><b>0</b><span>Tổng coin kiếm</span></div>
-                        <div class="stat-item"><b>0</b><span>Tổng link</span></div>
-                        <div class="stat-item"><b>0</b><span>Đã đổi</span></div>
+                    <div class="stats-grid" style="grid-template-columns: 1fr 1fr">
+                        <div class="stat-card"><b>0</b><span>Coin hiện có</span></div>
+                        <div class="stat-card"><b>0</b><span>Đã rút</span></div>
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 
     <script>
-        // Tạo tài khoản giả lập để bạn test
-        localStorage.setItem('admin_user', 'NamGTD001');
-        localStorage.setItem('admin_pass', 'NamGTD01@');
+        function showAuth(type) {
+            document.getElementById('login-screen').style.display = type === 'login' ? 'flex' : 'none';
+            document.getElementById('reg-screen').style.display = type === 'reg' ? 'flex' : 'none';
+        }
 
-        function checkLogin() {
-            const u = document.getElementById('user-in').value;
-            const p = document.getElementById('pass-in').value;
-            if(u === localStorage.getItem('admin_user') && p === localStorage.getItem('admin_pass')) {
-                document.getElementById('auth-section').style.display = 'none';
-                document.getElementById('main-app').style.display = 'block';
-                document.getElementById('display-u').innerText = u;
+        function doReg() {
+            const u = document.getElementById('r-u').value.trim();
+            const p = document.getElementById('r-p').value.trim();
+            const c = document.getElementById('r-c').value.trim();
+            if(!u || !p || p !== c) return alert("Kiểm tra lại thông tin!");
+            
+            // LƯU VÀO TRÌNH DUYỆT
+            localStorage.setItem('saved_user', u);
+            localStorage.setItem('saved_pass', p);
+            
+            alert("Đăng ký thành công! Hãy đăng nhập.");
+            showAuth('login');
+        }
+
+        function doLogin() {
+            const u = document.getElementById('l-u').value.trim();
+            const p = document.getElementById('l-p').value.trim();
+            
+            // LẤY DỮ LIỆU ĐÃ ĐĂNG KÝ
+            const sU = localStorage.getItem('saved_user');
+            const sP = localStorage.getItem('saved_pass');
+
+            if(u === sU && p === sP && u !== null) {
+                document.getElementById('login-screen').style.display = 'none';
+                document.getElementById('main-app').style.display = 'flex';
+                document.getElementById('u-display').innerText = u;
                 document.getElementById('p-name').innerText = u;
-                document.getElementById('small-avt').innerText = u.charAt(0).toUpperCase();
-                document.getElementById('big-avt').innerText = u.charAt(0).toUpperCase();
+                document.getElementById('s-avt').innerText = u.charAt(0).toUpperCase();
+                document.getElementById('b-avt').innerText = u.charAt(0).toUpperCase();
             } else {
                 document.getElementById('login-err').style.display = 'block';
             }
         }
 
-        function showTab(tabId, el) {
-            // Chuyển nội dung
-            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-            document.getElementById(tabId).classList.add('active');
-            
-            // Chuyển màu sidebar
-            document.querySelectorAll('.nav-link').forEach(n => n.classList.remove('active'));
+        function tab(id, el) {
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
             el.classList.add('active');
-
-            // Đổi tiêu đề header
-            document.getElementById('tab-title').innerText = el.innerText;
+            document.getElementById('title').innerText = el.innerText;
         }
     </script>
 </body>
