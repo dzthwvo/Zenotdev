@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ZenoDev - Hệ thống nhiệm vụ</title>
+    <title>ZenoDev - Hệ thống kiếm coin</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -30,206 +30,209 @@
         /* --- MÀN HÌNH ĐĂNG NHẬP --- */
         #login-screen {
             height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            background-image: radial-gradient(circle at 10% 20%, rgba(255, 215, 0, 0.05) 0%, transparent 40%),
-                              radial-gradient(circle at 90% 80%, rgba(59, 130, 246, 0.05) 0%, transparent 40%);
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            background-image: radial-gradient(circle at 10% 20%, rgba(255, 215, 0, 0.05) 0%, transparent 40%);
         }
-
-        .login-container { text-align: center; width: 100%; max-width: 450px; padding: 20px; }
         .logo-big { font-size: 2.5rem; font-weight: 700; margin-bottom: 10px; }
         .logo-big span { color: var(--accent-yellow); }
-        .subtitle { font-size: 0.9rem; color: var(--text-gray); margin-bottom: 40px; }
 
-        .login-card {
-            background-color: var(--card-bg);
-            border-radius: 16px;
-            padding: 40px 30px;
-            margin-bottom: 40px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-            border: 1px solid var(--border-color);
-        }
+        /* --- BỐ CỤC CHÍNH SAU ĐĂNG NHẬP --- */
+        #main-layout { display: none; flex-direction: row; }
 
-        .btn-google {
-            display: flex; align-items: center; justify-content: center;
-            background-color: var(--accent-blue); color: white;
-            text-decoration: none; padding: 12px 24px;
-            border-radius: 8px; font-weight: 600; font-size: 1rem;
-            transition: background-color 0.3s; width: 100%; border: none; cursor: pointer;
-        }
-        .btn-google:hover { background-color: #2563eb; }
-        .btn-google i { margin-right: 10px; font-size: 1.2rem; }
-
-        /* --- MÀN HÌNH DASHBOARD (ẨN MẶC ĐỊNH) --- */
-        #dashboard-screen {
-            display: none; /* Sẽ hiện khi click login */
-            flex-direction: row;
-        }
-
+        /* Sidebar */
         .sidebar {
             width: 260px; background-color: var(--sidebar-bg);
             border-right: 1px solid var(--border-color);
             display: flex; flex-direction: column; padding: 20px;
             position: fixed; height: 100vh;
         }
-
-        .brand { font-size: 1.8rem; font-weight: 700; margin-bottom: 30px; }
-        .brand span { color: var(--accent-yellow); }
-
         .nav-link {
             display: flex; align-items: center; padding: 12px 15px;
             color: var(--text-gray); text-decoration: none; border-radius: 8px;
-            margin-bottom: 5px; font-weight: 500; transition: 0.2s;
+            margin-bottom: 5px; font-weight: 500; cursor: pointer;
         }
         .nav-link.active { background-color: #2e2f35; color: var(--accent-yellow); border-left: 3px solid var(--accent-yellow); }
-        .nav-link:hover:not(.active) { background-color: #1f2937; color: white; }
+        .nav-link i { width: 25px; }
 
-        .user-profile {
-            margin-top: auto; display: flex; align-items: center;
-            padding: 12px; background-color: var(--card-bg);
-            border-radius: 10px; border: 1px solid var(--border-color);
-        }
-        .user-avatar {
-            width: 35px; height: 35px; background-color: var(--accent-yellow);
-            border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            font-weight: bold; color: #000; margin-right: 10px;
-        }
-
+        /* Content Area */
         .main-content { margin-left: 260px; flex: 1; padding: 20px 30px; }
-        .top-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
-        .coin-badge {
-            background-color: #1f2023; padding: 8px 16px; border-radius: 20px;
-            display: flex; align-items: center; border: 1px solid #333; color: var(--accent-yellow); font-weight: 600;
-        }
+        .page-section { display: none; }
+        .page-section.active { display: block; }
 
-        .alert-box {
-            background-color: rgba(241, 196, 15, 0.05); border: 1px solid rgba(241, 196, 15, 0.3);
-            border-radius: 8px; padding: 20px; color: var(--accent-yellow); margin-bottom: 30px;
+        /* --- TRANG CHỦ (DASHBOARD) --- */
+        .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 25px; }
+        .stat-card {
+            background-color: var(--sidebar-bg); padding: 25px; border-radius: 12px;
+            border: 1px solid var(--border-color); position: relative; overflow: hidden;
         }
-
-        .task-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 20px;
+        .stat-card::after {
+            content: ''; position: absolute; top: -20px; right: -20px; width: 80px; height: 80px;
+            background: rgba(241, 196, 15, 0.05); border-radius: 50%;
         }
+        .stat-val { font-size: 1.8rem; font-weight: 700; color: var(--accent-yellow); }
+        .stat-label { font-size: 0.8rem; color: var(--text-gray); margin-top: 5px; }
 
-        .task-card {
-            background-color: var(--sidebar-bg); border: 1px solid var(--border-color);
-            border-radius: 12px; padding: 20px;
-        }
+        .timer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 25px; }
+        .timer-card { background-color: var(--sidebar-bg); padding: 20px; border-radius: 12px; border: 1px solid var(--border-color); }
+        .countdown { display: flex; gap: 10px; margin-top: 15px; justify-content: center; }
+        .count-box { background: #1a1b1e; padding: 10px; border-radius: 8px; min-width: 50px; text-align: center; }
+        .count-num { display: block; font-size: 1.2rem; font-weight: 700; }
+        .count-txt { font-size: 0.6rem; color: var(--text-gray); }
 
+        /* --- TRANG NHIỆM VỤ --- */
+        .task-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 20px; }
+        .task-card { background-color: var(--sidebar-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 20px; }
         .btn-task {
             background-color: var(--accent-yellow); color: #000; border: none;
             padding: 12px; border-radius: 8px; font-weight: 700; cursor: pointer; width: 100%; margin-top: 15px;
         }
 
-        @media (max-width: 768px) {
-            .sidebar { display: none; }
-            .main-content { margin-left: 0; }
+        /* Profile Bottom */
+        .user-profile {
+            margin-top: auto; display: flex; align-items: center;
+            padding: 12px; background-color: var(--card-bg); border-radius: 10px;
         }
+        .user-avatar { width: 35px; height: 35px; background: var(--accent-yellow); border-radius: 50%; color: #000; font-weight: 700; display: flex; align-items: center; justify-content: center; margin-right: 10px; }
+
+        @media (max-width: 1024px) { .stats-grid { grid-template-columns: 1fr 1fr; } }
     </style>
 </head>
 <body>
 
     <div id="login-screen">
-        <div class="login-container">
+        <div style="text-align: center; max-width: 400px; width: 100%; padding: 20px;">
             <h1 class="logo-big">Zeno<span>Dev</span></h1>
-            <p class="subtitle">Kiếm coin • Vượt link • Đổi vật phẩm GTD</p>
-            <div class="login-card">
-                <h2 style="margin-bottom: 10px;">Chào mừng trở lại!</h2>
-                <p style="color: var(--text-gray); font-size: 0.9rem; margin-bottom: 25px;">Đăng nhập bằng tài khoản Google để tiếp tục</p>
-                
-                <button onclick="login()" class="btn-google">
-                    <i class="fa-brands fa-google"></i>
-                    Đăng nhập với Google
+            <p style="color: var(--text-gray); margin-bottom: 30px;">Kiếm coin • Vượt link • Đổi vật phẩm GTD</p>
+            <div style="background: var(--card-bg); padding: 40px; border-radius: 16px; border: 1px solid var(--border-color);">
+                <h2 style="margin-bottom: 25px;">Chào mừng trở lại!</h2>
+                <button onclick="showMain()" style="background: var(--accent-blue); color: white; width: 100%; padding: 12px; border-radius: 8px; border: none; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px;">
+                    <i class="fa-brands fa-google"></i> Đăng nhập với Google
                 </button>
             </div>
         </div>
     </div>
 
-    <div id="dashboard-screen">
+    <div id="main-layout">
         <div class="sidebar">
             <div class="brand">Zeno<span>Dev</span></div>
-            <div style="font-size: 0.7rem; color: #666; margin-bottom: 10px; font-weight: 700;">MENU</div>
+            <div style="font-size: 0.7rem; color: #555; font-weight: 800; margin-bottom: 10px;">MENU</div>
             <nav>
-                <a href="#" class="nav-link"><i class="fa-solid fa-house" style="width:25px"></i> Trang chủ</a>
-                <a href="#" class="nav-link active"><i class="fa-solid fa-bullseye" style="width:25px"></i> Nhiệm vụ</a>
-                <a href="#" class="nav-link"><i class="fa-solid fa-right-left" style="width:25px"></i> Đổi tài khoản</a>
-                <a href="#" class="nav-link"><i class="fa-solid fa-coins" style="width:25px"></i> Nạp Coin</a>
-                <a href="#" class="nav-link"><i class="fa-solid fa-clock-rotate-left" style="width:25px"></i> Lịch sử</a>
-                <a href="#" class="nav-link"><i class="fa-solid fa-chart-simple" style="width:25px"></i> Bảng xếp hạng</a>
+                <div class="nav-link active" onclick="switchPage('home', this)"><i class="fa-solid fa-house"></i> Trang chủ</div>
+                <div class="nav-link" onclick="switchPage('tasks', this)"><i class="fa-solid fa-bullseye"></i> Nhiệm vụ</div>
+                <div class="nav-link"><i class="fa-solid fa-right-left"></i> Đổi tài khoản</div>
+                <div class="nav-link"><i class="fa-solid fa-coins"></i> Nạp Coin</div>
+                <div class="nav-link"><i class="fa-solid fa-clock-rotate-left"></i> Lịch sử</div>
+                <div class="nav-link"><i class="fa-solid fa-chart-simple"></i> Bảng xếp hạng</div>
             </nav>
 
             <div class="user-profile">
                 <div class="user-avatar">G</div>
-                <div class="user-info">
-                    <h4 id="user-name">Google User</h4>
-                    <p style="font-size: 0.8rem; color: var(--accent-yellow);"><i class="fa-solid fa-coins"></i> 0 Coin</p>
+                <div style="flex: 1;">
+                    <h4 style="font-size: 0.85rem;">Google User</h4>
+                    <p style="font-size: 0.75rem; color: var(--accent-yellow);">0 Coin</p>
                 </div>
-                <i class="fa-solid fa-right-from-bracket" style="margin-left: auto; color: #555; cursor: pointer;" onclick="location.reload()"></i>
+                <i class="fa-solid fa-right-from-bracket" style="color:#444; cursor:pointer" onclick="location.reload()"></i>
             </div>
         </div>
 
         <div class="main-content">
-            <div class="top-header">
-                <h2 style="font-weight: 700;">Nhiệm vụ</h2>
-                <div class="coin-badge"><i class="fa-solid fa-coins"></i> 0</div>
+            <header style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
+                <h2 id="page-title">Trang chủ</h2>
+                <div style="background: #1f2023; padding: 8px 15px; border-radius: 20px; color: var(--accent-yellow); font-weight: 700;">
+                    <i class="fa-solid fa-coins"></i> 0
+                </div>
+            </header>
+
+            <div id="home" class="page-section active">
+                <div class="stats-grid">
+                    <div class="stat-card"><div class="stat-val">0</div><div class="stat-label">Tổng Coin</div></div>
+                    <div class="stat-card"><div class="stat-val">0</div><div class="stat-label">Link hôm nay</div></div>
+                    <div class="stat-card"><div class="stat-val">0</div><div class="stat-label">Tổng link đã vượt</div></div>
+                    <div class="stat-card"><div class="stat-val">7</div><div class="stat-label">Nhiệm vụ khả dụng</div></div>
+                </div>
+
+                <div class="timer-grid">
+                    <div class="timer-card">
+                        <div style="display:flex; justify-content:space-between; font-size:0.8rem">
+                            <span><i class="fa-solid fa-clock"></i> Reset Coin</span>
+                            <span style="color:var(--accent-yellow)">01/01/2026</span>
+                        </div>
+                        <div class="countdown">
+                            <div class="count-box"><span class="count-num">01</span><span class="count-txt">NGÀY</span></div>
+                            <div class="count-box"><span class="count-num">12</span><span class="count-txt">GIỜ</span></div>
+                            <div class="count-box"><span class="count-num">45</span><span class="count-txt">PHÚT</span></div>
+                        </div>
+                    </div>
+                    <div class="timer-card">
+                        <div style="display:flex; justify-content:space-between; font-size:0.8rem">
+                            <span><i class="fa-solid fa-arrows-rotate"></i> Reset Link hàng ngày</span>
+                            <span style="color:#2ecc71">00:00</span>
+                        </div>
+                        <div class="countdown">
+                            <div class="count-box"><span class="count-num">00</span><span class="count-txt">GIỜ</span></div>
+                            <div class="count-box"><span class="count-num">13</span><span class="count-txt">PHÚT</span></div>
+                            <div class="count-box"><span class="count-num">30</span><span class="count-txt">GIÂY</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="background: var(--sidebar-bg); padding: 20px; border-radius: 12px; border: 1px solid var(--border-color);">
+                    <div style="display:flex; justify-content:space-between; margin-bottom: 15px;">
+                        <h4 style="font-size: 0.9rem;"><i class="fa-solid fa-bolt"></i> Nhiệm vụ nhanh</h4>
+                        <span style="font-size:0.75rem; color:var(--accent-yellow); cursor:pointer" onclick="switchPage('tasks')">Xem tất cả</span>
+                    </div>
+                    <div class="task-grid">
+                        <div style="background:#1a1b1e; padding:15px; border-radius:10px; display:flex; justify-content:space-between; align-items:center">
+                            <div style="display:flex; align-items:center; gap:10px">
+                                <i class="fa-solid fa-link" style="color:#555"></i>
+                                <div><div style="font-weight:600; font-size:0.9rem">Yeumoney</div><div style="color:var(--accent-yellow); font-size:0.75rem">40 coin</div></div>
+                            </div>
+                            <button style="background:var(--accent-yellow); border:none; padding:5px 12px; border-radius:5px; font-weight:700; font-size:0.75rem">Nhận link</button>
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <div class="alert-box">
-                <strong><i class="fa-regular fa-lightbulb"></i> Hướng dẫn</strong><br>
-                <span style="font-size: 0.9rem;">Nhấn "Nhận link" → Vượt link → Tự động nhận coin khi hoàn thành.</span>
-            </div>
-
-            <div class="task-grid">
-                <div class="task-card">
-                    <div style="display: flex; justify-content: space-between;">
-                        <div style="display: flex; align-items: center;">
-                            <div style="background:#1f2023; padding:10px; border-radius:8px; margin-right:15px;"><i class="fa-solid fa-link"></i></div>
-                            <div>
-                                <div style="font-weight: 700;">Yeumoney</div>
-                                <div style="color: var(--accent-yellow); font-size: 0.8rem;">40 coin / lượt</div>
-                            </div>
-                        </div>
-                        <span style="color: var(--accent-yellow); font-size: 0.8rem; background: #1f2023; padding: 4px 8px; border-radius: 5px;">0/3</span>
-                    </div>
-                    <button class="btn-task"><i class="fa-solid fa-rocket"></i> Nhận link</button>
+            <div id="tasks" class="page-section">
+                <div style="background: rgba(241, 196, 15, 0.05); border: 1px solid rgba(241, 196, 15, 0.2); padding: 15px; border-radius: 8px; color: var(--accent-yellow); margin-bottom: 25px; font-size: 0.9rem;">
+                    <i class="fa-regular fa-lightbulb"></i> <b>Hướng dẫn:</b> Nhấn "Nhận link" → Vượt link → Tự động nhận coin.
                 </div>
-                <div class="task-card">
-                    <div style="display: flex; justify-content: space-between;">
-                        <div style="display: flex; align-items: center;">
-                            <div style="background:#1f2023; padding:10px; border-radius:8px; margin-right:15px;"><i class="fa-solid fa-link"></i></div>
-                            <div>
-                                <div style="font-weight: 700;">Link4m</div>
-                                <div style="color: var(--accent-yellow); font-size: 0.8rem;">45 coin / lượt</div>
+                <div class="task-grid">
+                    <div class="task-card">
+                        <div style="display:flex; justify-content:space-between; align-items:center">
+                            <div style="display:flex; align-items:center; gap:15px">
+                                <div style="background:#1f2023; padding:12px; border-radius:8px"><i class="fa-solid fa-link"></i></div>
+                                <div><div style="font-weight:700">Link4m</div><div style="color:var(--accent-yellow); font-size:0.8rem">45 coin / lượt</div></div>
                             </div>
+                            <span style="background:#1f2023; padding:4px 10px; border-radius:5px; color:var(--accent-yellow); font-size:0.8rem">0/2</span>
                         </div>
-                        <span style="color: var(--accent-yellow); font-size: 0.8rem; background: #1f2023; padding: 4px 8px; border-radius: 5px;">0/2</span>
+                        <button class="btn-task"><i class="fa-solid fa-rocket"></i> Nhận link</button>
                     </div>
-                    <button class="btn-task"><i class="fa-solid fa-rocket"></i> Nhận link</button>
-                </div>
-                <div class="task-card">
-                    <div style="display: flex; justify-content: space-between;">
-                        <div style="display: flex; align-items: center;">
-                            <div style="background:#1f2023; padding:10px; border-radius:8px; margin-right:15px;"><i class="fa-solid fa-link"></i></div>
-                            <div>
-                                <div style="font-weight: 700;">Click1s</div>
-                                <div style="color: var(--accent-yellow); font-size: 0.8rem;">55 coin / lượt</div>
-                            </div>
-                        </div>
-                        <span style="color: var(--accent-yellow); font-size: 0.8rem; background: #1f2023; padding: 4px 8px; border-radius: 5px;">0/1</span>
                     </div>
-                    <button class="btn-task"><i class="fa-solid fa-rocket"></i> Nhận link</button>
-                </div>
             </div>
         </div>
     </div>
 
     <script>
-        function login() {
-            // Hiệu ứng chuyển cảnh đơn giản
+        function showMain() {
             document.getElementById('login-screen').style.display = 'none';
-            document.getElementById('dashboard-screen').style.display = 'flex';
+            document.getElementById('main-layout').style.display = 'flex';
+        }
+
+        function switchPage(pageId, element) {
+            // Ẩn tất cả các section
+            document.querySelectorAll('.page-section').forEach(p => p.classList.remove('active'));
+            // Hiện section được chọn
+            document.getElementById(pageId).classList.add('active');
+            
+            // Cập nhật tiêu đề trang
+            document.getElementById('page-title').innerText = pageId === 'home' ? 'Trang chủ' : 'Nhiệm vụ';
+
+            // Cập nhật trạng thái active trên sidebar
+            if(element) {
+                document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                element.classList.add('active');
+            }
         }
     </script>
 </body>
