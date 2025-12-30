@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ZenoDev - Dashboard</title>
+    <title>ZenoDev - Security System</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -19,7 +19,13 @@
         .logo-text { font-size: 2rem; font-weight: 800; margin-bottom: 25px; text-align: center; }
         .logo-text span { color: var(--accent-yellow); }
         
-        .error-msg { color: var(--error-red); font-size: 0.85rem; margin-bottom: 15px; text-align: center; display: none; font-weight: 600; }
+        /* Chữ đỏ cảnh báo */
+        .error-msg { 
+            color: var(--error-red); font-size: 0.85rem; margin-bottom: 15px; 
+            text-align: center; display: none; font-weight: 700;
+            background: rgba(255, 77, 77, 0.1); padding: 10px; border-radius: 5px;
+            border: 1px solid rgba(255, 77, 77, 0.2);
+        }
         
         .input-group { margin-bottom: 15px; }
         .input-group label { display: block; font-size: 0.75rem; color: #888; margin-bottom: 6px; text-transform: uppercase; }
@@ -34,13 +40,11 @@
         .switch-link { text-align: center; margin-top: 20px; font-size: 0.85rem; color: #888; }
         .switch-link span { color: var(--accent-yellow); cursor: pointer; }
 
-        /* DASHBOARD */
+        /* DASHBOARD - MẶC ĐỊNH LÀ ẨN */
         #main-layout { display: none; }
         .sidebar { width: 250px; background: var(--sidebar-bg); border-right: 1px solid var(--border-color); position: fixed; height: 100vh; padding: 20px; display: flex; flex-direction: column; }
         .content { margin-left: 250px; padding: 30px; }
-        .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; }
         .card { background: var(--sidebar-bg); padding: 20px; border-radius: 10px; border: 1px solid var(--border-color); }
-        .card-val { font-size: 1.6rem; font-weight: 700; color: var(--accent-yellow); }
         .user-footer { margin-top: auto; display: flex; align-items: center; padding: 10px; background: #1a1b1e; border-radius: 8px; }
         .avatar { width: 32px; height: 32px; border-radius: 50%; background: var(--accent-yellow); color: #000; display: flex; align-items: center; justify-content: center; font-weight: 800; margin-right: 10px; }
     </style>
@@ -51,14 +55,16 @@
         <div class="logo-text">Zeno<span>Dev</span></div>
         <div class="auth-box">
             <div style="font-size: 1.2rem; font-weight: 600; margin-bottom: 20px; text-align: center;">Đăng nhập</div>
+            
             <div id="login-error" class="error-msg">Warning: inaccurate information!!</div>
+
             <div class="input-group">
                 <label>Username</label>
-                <input type="text" id="l-user" placeholder="NamGTD001">
+                <input type="text" id="l-user" placeholder="Ví dụ: NamGTD001">
             </div>
             <div class="input-group">
                 <label>Password</label>
-                <input type="password" id="l-pass" placeholder="NamGTD01@">
+                <input type="password" id="l-pass" placeholder="Mật khẩu">
             </div>
             <button class="btn-submit" onclick="doLogin()">ĐĂNG NHẬP</button>
             <div class="switch-link">Bạn chưa có tài khoản? <span onclick="showPage('register-page')">Đăng kí ngay</span></div>
@@ -71,15 +77,15 @@
             <div style="font-size: 1.2rem; font-weight: 600; margin-bottom: 20px; text-align: center;">Đăng kí tài khoản</div>
             <div class="input-group">
                 <label>Username</label>
-                <input type="text" id="r-user" placeholder="Tên tài khoản">
+                <input type="text" id="r-user" placeholder="Tạo tên đăng nhập">
             </div>
             <div class="input-group">
                 <label>Password</label>
-                <input type="password" id="r-pass" placeholder="Mật khẩu">
+                <input type="password" id="r-pass" placeholder="Tạo mật khẩu">
             </div>
             <div class="input-group">
                 <label>Confirm Password</label>
-                <input type="password" id="r-conf" placeholder="Xác nhận mật khẩu">
+                <input type="password" id="r-conf" placeholder="Nhập lại mật khẩu">
             </div>
             <button class="btn-submit" onclick="doRegister()">ĐĂNG KÍ</button>
             <div class="switch-link">Đã có tài khoản? <span onclick="showPage('login-page')">Đăng nhập</span></div>
@@ -89,9 +95,9 @@
     <div id="main-layout">
         <div class="sidebar">
             <div class="logo-text" style="text-align:left; font-size:1.5rem">Zeno<span>Dev</span></div>
-            <div style="background: #2e2f35; color: var(--accent-yellow); padding: 12px; border-radius: 8px; margin-bottom: 5px; border-left: 3px solid var(--accent-yellow);">Trang chủ</div>
+            <div style="background: #2e2f35; color: var(--accent-yellow); padding: 12px; border-radius: 8px; border-left: 3px solid var(--accent-yellow);">Trang chủ</div>
             <div class="user-footer">
-                <div class="avatar" id="user-avt">U</div>
+                <div class="avatar" id="user-avt">?</div>
                 <div style="flex:1">
                     <div id="user-display" style="font-size:0.8rem; font-weight:600">Username</div>
                     <div style="font-size:0.7rem; color:var(--accent-yellow)">0 Coin</div>
@@ -103,54 +109,60 @@
                 <h2>Trang chủ</h2>
                 <div style="color:var(--accent-yellow); font-weight:700">0 COIN</div>
             </header>
-            <div class="stats">
-                <div class="card"><div class="card-val">0</div><div style="color:#888; font-size:0.75rem">Tổng Coin</div></div>
-                <div class="card"><div class="card-val">0</div><div style="color:#888; font-size:0.75rem">Link hôm nay</div></div>
-                <div class="card"><div class="card-val">0</div><div style="color:#888; font-size:0.75rem">Tổng link đã vượt</div></div>
-                <div class="card"><div class="card-val">7</div><div style="color:#888; font-size:0.75rem">Nhiệm vụ</div></div>
-            </div>
+            <div class="card"><div style="font-size:1.6rem; font-weight:700; color:var(--accent-yellow)">0</div><div style="color:#888; font-size:0.75rem">Tổng Coin</div></div>
         </div>
     </div>
 
     <script>
+        // Xóa sạch dữ liệu cũ mỗi khi F5 để bạn test cho chuẩn
+        // localStorage.clear(); 
+
         function showPage(id) {
             document.getElementById('login-page').style.display = 'none';
             document.getElementById('register-page').style.display = 'none';
             document.getElementById('main-layout').style.display = 'none';
-            document.getElementById(id).style.display = (id === 'main-layout' ? 'block' : 'flex');
+            
+            const target = document.getElementById(id);
+            if(id === 'main-layout') target.style.display = 'block';
+            else target.style.display = 'flex';
         }
 
         function doRegister() {
-            const u = document.getElementById('r-user').value;
-            const p = document.getElementById('r-pass').value;
-            const c = document.getElementById('r-conf').value;
-            if(!u || !p || p !== c) return alert("Kiểm tra lại thông tin đăng kí!");
+            const u = document.getElementById('r-user').value.trim();
+            const p = document.getElementById('r-pass').value.trim();
+            const c = document.getElementById('r-conf').value.trim();
+
+            if(!u || !p) return alert("Không được để trống!");
+            if(p !== c) return alert("Mật khẩu xác nhận không khớp!");
             
-            // Lưu vào trình duyệt (Giả lập database)
-            localStorage.setItem('zeno_user', u);
-            localStorage.setItem('zeno_pass', p);
+            // LƯU THẬT VÀO TRÌNH DUYỆT
+            localStorage.setItem('reg_user', u);
+            localStorage.setItem('reg_pass', p);
             
-            alert("Đăng kí thành công! Hãy đăng nhập.");
+            alert("Đăng kí thành công! Giờ hãy đăng nhập.");
             showPage('login-page');
         }
 
         function doLogin() {
-            const u = document.getElementById('l-user').value;
-            const p = document.getElementById('l-pass').value;
-            const savedUser = localStorage.getItem('zeno_user');
-            const savedPass = localStorage.getItem('zeno_pass');
-            const errorDiv = document.getElementById('login-error');
+            const uInput = document.getElementById('l-user').value.trim();
+            const pInput = document.getElementById('l-pass').value.trim();
+            
+            const savedU = localStorage.getItem('reg_user');
+            const savedP = localStorage.getItem('reg_pass');
+            const errorLabel = document.getElementById('login-error');
 
-            // Kiểm tra thông tin có khớp với lúc đăng ký không
-            if (u === savedUser && p === savedPass && u !== null) {
-                errorDiv.style.display = 'none';
-                showPage('main-layout');
-                document.getElementById('user-display').innerText = u;
-                document.getElementById('user-avt').innerText = u.charAt(0).toUpperCase();
-            } else {
-                // Hiện chữ đỏ cảnh báo
-                errorDiv.style.display = 'block';
+            // --- ĐIỀU KIỆN KHÓA CỬA ---
+            // Nếu nhập trống HOẶC không khớp với thông tin đã đăng ký
+            if (!uInput || !pInput || uInput !== savedU || pInput !== savedP) {
+                errorLabel.style.display = 'block'; // Hiện chữ đỏ
+                return; // DỪNG LẠI LUÔN, KHÔNG CHO CHẠY TIẾP
             }
+
+            // Nếu chạy đến đây tức là ĐÚNG tài khoản
+            errorLabel.style.display = 'none';
+            showPage('main-layout');
+            document.getElementById('user-display').innerText = uInput;
+            document.getElementById('user-avt').innerText = uInput.charAt(0).toUpperCase();
         }
     </script>
 </body>
